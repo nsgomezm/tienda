@@ -1,0 +1,96 @@
+body{
+    background-image: url('public/img/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.form-login{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    transform: translateY(60%);
+
+    .form{
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        position: relative;
+        padding: $padding*2;
+        &__back{
+            width: 100%;
+            height: 40vh;
+            padding: $padding $padding*2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            background-color: rgba($blue, .8);
+            &--login,
+            &--register{
+                padding: 20px;
+                color: white;
+                font-weight: 700;
+                font-size: $font-size-base;
+                line-height: $line-height-base;
+                width: 100%;
+                text-align: center;
+                button{
+                    margin-top: $padding;
+                    color:white;
+                    border-color:white;
+                    transition: all linear .3s;
+                    &:hover{
+                        background-color: white;
+                        color: $blue;
+                    }
+                }
+            }
+        }
+
+        &__front{
+            display: flex;
+            align-items: center;
+            width: 40%;
+            max-width: 500px;
+            position: absolute; 
+            padding: $padding*2;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            left: 5%;
+            // left: 50%;
+            transition: all linear .3s;
+            &--login,
+            &--register{
+                width: 100%;
+                background-color: $body-bg;
+                padding: $padding*3 $padding*2;
+                border-radius: 20px;
+                position: absolute;
+                text-align: center;
+                h2{
+                    text-align: center;
+                    color: $blue;
+                    padding-bottom: $padding;
+                }
+                input{
+                    margin: $padding 0;
+                }
+            }
+
+            &--login{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                min-height: 300px;
+            }
+
+            &--register{
+                display: none;
+            }
+        }
+    }
+}
+
