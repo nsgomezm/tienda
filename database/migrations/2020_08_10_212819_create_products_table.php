@@ -22,9 +22,9 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->double('price', 8,2); #20'000.000.00
             $table->bigInteger('stock');
+            $table->json('categories_id');
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('brand_id')->references('id')->on('brands');
 
         });

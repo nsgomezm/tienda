@@ -23,28 +23,21 @@ Route::post('/registerUser', 'UserController@register')->name('register');
 
 Route::view('/home', 'products')->name('products');
 
-
 Route::group(['middleware' => 'auth'], function () {
-    Route::view('/dashboard', 'dashboard');
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    // Route::view('/product/form', 'product-form')->name('productForm');
     
-    Route::get('/product/form/{id?}',function($id = -1){
-        return view('product-form', compact('id'));
-    });
+    Route::get('/product/form/{id?}', 'ProductController@form');
     
+    
+    // consulta
+    Route::post('/product/updateInformation/{product}', 'ProductController@updateInformation')->name('updateProduct'); 
+    Route::post('/product/insertInformation', 'ProductController@insertInformation')->name('insertProduct'); 
+    Route::post('/product/deleteInformation/', 'ProductController@deleteInformation')->name('deleteProduct'); 
+    
+    
+    Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::post('/product/information/{id}', function($id){
         return Product::find($id);
     });
-    
-    Route::get('/logout', 'AuthController@logout')->name('logout');
-});
-// Route::get('/test', function(){
-//     // $products = Product::with('categories')->get();
-//     return view('products', compact('products'));
-// });
-
-Route::post('/products', function(){
-    return Product::with('brand','categories')->get();
-});
-Route::get('/products', function(){
-    return Product::with('brand','categories')->get();
 });

@@ -18,6 +18,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/d10f5f87f4.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -50,6 +52,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </div>
                             </li>
