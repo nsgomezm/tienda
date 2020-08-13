@@ -28,13 +28,17 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::view('/product/form', 'product-form')->name('productForm');
     
     Route::get('/product/form/{id?}', 'ProductController@form');
+    Route::get('/product/details/{id}', function($id){
+        return view('product-details', compact('id'));
+    });
     
     
     // consulta
     Route::post('/product/updateInformation/{product}', 'ProductController@updateInformation')->name('updateProduct'); 
     Route::post('/product/insertInformation', 'ProductController@insertInformation')->name('insertProduct'); 
-    Route::post('/product/deleteInformation/', 'ProductController@deleteInformation')->name('deleteProduct'); 
+    Route::post('/product/deleteInformation/{id}', 'ProductController@deleteInformation')->name('deleteProduct'); 
     
+    Route::get('/product/getInformation/{id}', 'ProductController@getInformation')->name('getProduct'); 
     
     Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::post('/product/information/{id}', function($id){

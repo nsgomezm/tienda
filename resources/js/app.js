@@ -6,6 +6,7 @@ import swal from 'sweetalert'
 import Products from './components/products/Products.vue'
 import ProductForm from './components/products/ProductForm.vue'
 import ProductsList from './components/products/ProductsList.vue'
+import ProductDetails from './components/products/ProductDetails.vue'
 
 new Vue({
     el: '#app',
@@ -13,5 +14,6 @@ new Vue({
         Products,
         ProductForm,
         ProductsList,
+        ProductDetails,
     }
 });

@@ -33,10 +33,15 @@ class ProductController extends Controller
         ]);
     }
 
-    public function deleteInformation(Request $Request){
-        // return $Request->all();
+    public function deleteInformation($id){
+        $product = Product::find($id)->delete();
         return response()->json([
-            $Request->all()
+            true
         ]);
+    }
+
+    public function getInformation($id){
+        $productInformation = Product::with('comments','brand','categories')->find($id);
+        return view('product-details', compact('productInformation'));
     }
 }

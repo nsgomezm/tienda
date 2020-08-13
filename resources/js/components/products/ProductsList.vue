@@ -78,7 +78,9 @@
             },
             async deleteProduct(product){
                 // console.log(id)
-                await axios.post(`/product/deleteInformation/`, product ).then(res => {
+                await axios.post(`/product/deleteInformation/${product.id}`).then(res => {
+                    console.log(res.data)
+                    this.getProducts()
                     swal(product.name + " is deleted" , {
                         icon: "success",
                     });

@@ -24,13 +24,14 @@
                                 </div>
                                 <p class="card-text">{{product.excerpt}}</p>
                                 <hr>
-                                <p class="text-muted float-right">
+                                <div class="mb-4 text-right">
                                     <a v-for="(category, index) in product.categories" :key="index" class="btn btn-link">
                                         #{{category.name}}
                                     </a>
-                                </p>
+                                </div>
                                 <div class="d-flex justify-content-around pt-4">
-                                    <p class="card-text btn btn-success"><b>Comprar</b> ${{product.price}} </p>
+                                    <a :href="`/product/getInformation/${product.id}`" class="btn btn-outline-primary">Details</a>
+                                    <a href="#" class="card-text btn btn-success"><b>Comprar</b> ${{product.price}} </a>
                                 </div>
                             </div>
                         </div>
