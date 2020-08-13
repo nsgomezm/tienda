@@ -2232,6 +2232,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -39713,8 +39716,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "body-bg p-4 mt-4" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-bordered table-hover" }, [
-      _vm._m(0),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "tbody",
@@ -39770,6 +39775,18 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-4" }, [
+      _c(
+        "a",
+        { staticClass: "btn btn-primary", attrs: { href: "product/form" } },
+        [_vm._v("New product")]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

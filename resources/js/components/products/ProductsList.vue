@@ -1,5 +1,8 @@
 <template>
     <div class="body-bg p-4 mt-4">
+        <div class="mb-4">
+            <a href="product/form" class="btn btn-primary">New product</a>
+        </div>
         <table class="table table-bordered table-hover">
             <thead>
                 <tr class="table-primary">
