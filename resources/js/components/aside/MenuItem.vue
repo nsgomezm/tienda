@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <a class="d-block">
         {{ items_menu }}
-    </div>
+    </a>
 </template>
 
 <script>
@@ -13,8 +13,7 @@
             }
         },
         created(){
-
-            console.log(this.items_menu)
+            // console.log(this.items_menu)
         }
     }
 </script>

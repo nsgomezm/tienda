@@ -16,20 +16,35 @@ class ProductController extends Controller
     }
 
     public function updateInformation(Request $Request, Product $Product){
-        $product = new Product($Request->all());
-        $Product->update($product->toArray());
+        
+        if($Request->hasFile('photo')){
+            $imageName = "/img/{$Request->photo->getClientOriginalName()}";
+            $Request->photo->move(public_path('img'), $imageName);
+            $productInformation = request()->all();
+            $productInformation['photo'] = $imageName;
+
+            $Product->update($productInformation);
+
+        }else{
+            $Product->update($Request->all());
+        }
+        
         
         return response()->json([
-            'product_information' => $Request->all()
+            $Request->all()
         ]);
     }           
 
     public function insertInformation(Request $Request){
-        // $product = new Product($Request->all());
-        // $product->save();
-        return $Request->all();
-
+        $imageName = "/img/{$Request->photo->getClientOriginalName()}";
+        $Request->photo->move(public_path('img'), $imageName);
+        $productInformation = request()->all();
+        $productInformation['photo'] = $imageName;
+        
+        $product = new Product($productInformation);
+        $product->save();
         return response()->json([
+            true
         ]);
     }
 
@@ -41,7 +56,36 @@ class ProductController extends Controller
     }
 
     public function getInformation($id){
-        $productInformation = Product::with('comments','brand','categories')->find($id);
+        $productInformation = Product::with('comments.user','brand','categories')->find($id);
         return view('product-details', compact('productInformation'));
+    }
+
+    public function getProducts($search = null){
+        if($search == null){
+            $products = Product::with('brand', 'categories')->get();
+        }else{
+            $products = Product::with('brand', 'categories')->where('name', 'LIKE', "%$search%")->get();
+        }
+        
+        return view('products', compact('products'));
+    }
+    public function getProductsBrand($search = null){
+        if($search == null){
+            $products = Product::with('brand', 'categories')->get();
+        }else{
+            $products = Product::with('brand', 'categories')->where('brand_id', '=', "$search")->get();
+        }
+
+        return view('products', compact('products'));
+    }
+
+    public function getProductsCategory($search = null){
+        if($search == null){
+            $products = Product::with('brand', 'categories')->get();
+        }else{
+            $products = Product::with('brand', 'categories')->where('category_id', '=', "$search")->get();
+        }
+
+        return view('products', compact('products'));
     }
 }

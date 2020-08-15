@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
-	protected $fillable = ['name', 'excerpt', 'description', 'price', 'stock', 'brand_id'];
+	protected $fillable = ['name', 'excerpt', 'description', 'price', 'stock', 'brand_id', 'category_id', 'photo'];
 
     public function comments()
 	{
@@ -22,6 +22,6 @@ class Product extends Model
 
 	public function categories()
 	{
-		return $this->belongsToMany(Category::class);
+		return $this->belongsTo(Category::class);
 	}
 }

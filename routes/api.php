@@ -29,9 +29,20 @@ Route::post('/products/details', function(){
 });
 
 Route::post('/categories', function(){
-    return Category::get();
+    return Category::has('products')->get();
+    // return Category::all();
 });
 
 Route::post('/brands', function(){
-    return Brand::get();
+    return Brand::has('products')->get();
+    // return Brand::all();
+});
+
+Route::post('/categoriesController', function(){
+    return Category::with('products')->get();
+    // return view('categories', compact('categories'));
+});
+
+Route::post('/brandsController', function(){
+    return Brand::with('products')->get();
 });

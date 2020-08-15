@@ -13,21 +13,21 @@
                     <th scope="col">Price</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Comments</th>
-                    <th scope="col">Categories</th>
-                    <th scope="col" colspan="2">Actions</th>
+                    <th scope="col" colspan="3">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(product, index) in products" :key="index" >
                     <td>{{ index+1 }}</td>
-                    <td>{{ product.photo }}</td>
-                    <td>{{ product.brand.name }}</td>
+                    <td ><img :src="product.photo" alt="" style="max-width: 50px"></td>
+                    <td v-if="product.brand != null">{{ product.brand.name }}</td>
+                    <td v-if="product.brand == null"></td>
                     <td>{{ product.name }}</td>
                     <td>${{ product.price }}</td>
                     <td>{{ product.stock }}</td>
                     <td>{{ product.comments.length }}</td>
-                    <td>{{ product.categories.length }}</td>
                     <!-- actions -->
+                    <td><a :href="`product/getInformation/${product.id}`" class="btn btn-secondary"><i class="fas fa-info"></i> </a></td>
                     <td><a :href="`product/form/${product.id}`" class="btn btn-primary"><i class="fas fa-share"></i> </a></td>
                     <td><a href="#" class="btn btn-danger" v-on:click="confirmDelete(product)"><i class="fas fa-trash"></i> </a></td>
                 </tr>

@@ -11,7 +11,7 @@
                 </ul>
             </div>
             <div class="col-8">
-                <products-list/>
+                <categories/>
             </div>
         </div>
     </div>

@@ -11,12 +11,13 @@
                 </div>
                 <div id="categorisMenu" class="collapse" aria-labelledby="categories" data-parent="#categories">
                     <div class="card-body" v-for="(category, index) in categories" :key=index >
-                        <a href="#" class="btn btn-link">{{category.name}}</a>
+                        <a :href="`/home/category/${category.id}`" class="btn btn-link d-block text-left">{{category.name}}</a>
                         <!-- <li ><a href="#" class="btn btn-link d-block text-left"></a></li> -->
                     </div>
                 </div>
             </div>
         </div>
+        <hr>
         <div class="accordion" id="brands">
             <div class="card">
                 <div class="card-header bg-primary" id="brands">
@@ -28,18 +29,11 @@
                 </div>
                 <div id="brandsMenu" class="collapse show" aria-labelledby="brands" data-parent="#brands">
                     <div class="card-body" v-for="(brand, index) in brands" :key=index >
-                        <a href="#" class="btn btn-link">{{brand.name}}</a>
-                        <!-- <li ><a href="#" class="btn btn-link d-block text-left"></a></li> -->
+                        <a :href="`/home/brand/${brand.id}`" class="btn btn-link d-block text-left">{{brand.name}}</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <hr>
-        <!-- <ul class="list-group list-group-flush">
-            <li class="list-group-item active">Brands</li>
-            <li v-for="(brand, index) in brands" :key=index class="list-group-item"><a href="#" class="btn btn-link d-block text-left">{{brand.name}}</a></li>
-        </ul> -->
     </div>
 </template>
 

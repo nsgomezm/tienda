@@ -1,6 +1,6 @@
 <template>
         <div class="container d-flex justify-content-center">
-            <form class="form col-10 p-4 m-4" v-on:submit.prevent="store" enctype="multipart/form-data">
+            <form class="form col-10 p-4 m-4" v-on:submit.prevent="store">
                 <h1 class="text-primary text-center"> Manage product </h1>
                 <div class="row">
                     <div class="form-row col-12">
@@ -20,41 +20,36 @@
                 </div>
                 <div class="row">
                     <div class="col-6 d-flex flex-column justify-content-between">
-                        
-                        <!-- <img :src="`{{product_information.photo}}`" alt="imagen" > -->
-                        <img :src="image" alt="imagen" >
+                        <img :src="photo" alt="" v-if="showPhoto" style="max-height: 400px">
+                        <img :src="product_information.photo" v-if="!showPhoto" style="max-height: 400px">
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Photo product</span>
                             </div>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="photo" aria-describedby="inputGroupFileAddon01" v-on:change="loadImage">
+                                <input type="file" class="custom-file-input" id="photo" aria-describedby="inputGroupFileAddon01" accept="image/*" v-on:change="previewFile">
                                 <label class="custom-file-label" for="photo">Choose file</label>
                             </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="input-group mb-3">
-                            <!-- <div class="input-group-prepend"> -->
-                                <!-- <label class="input-group-text" for="category">Category</label> -->
-                            <!-- </div> -->
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
-                                Selecet categories
-                            </button>
-
-                            <!-- <select class="custom-select" id="category">
-                                <option :value="category.name" v-for="(category, index) in categories" :key=index>{{category.name}}</option>
-                            </select> -->
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="category">Category</label>
+                            </div>
+                            <select class="custom-select" id="category" v-model="product_information.category_id">
+                                <option :value="category.id" v-for="(category, index) in categories" :key=index >{{category.name}}</option>
+                            </select>
                         </div>
                         <div class="input-group ">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" for="category">Brand</label>
+                                <label class="input-group-text" for="brand">Brand</label>
                             </div>
-                            <select class="custom-select" id="category" v-model="product_information.brand_id">
+                            <select class="custom-select" id="brand" v-model="product_information.brand_id">
                                 <option :value="brand.id" v-for="(brand, index) in brands" :key=index >{{brand.name}}</option>
                             </select>
                         </div>
-
                         <div class="form-group my-2">
                             <label for="excerpt">Excerpt</label>
                             <textarea id="excerpt" class="form-control" cols="4" rows="2" v-model="product_information.excerpt">Excerpt</textarea>
@@ -80,36 +75,12 @@
                     <a href="/dashboard" class="btn btn-link">To return</a>
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Select categories</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <ul class="list-group">
-                            <!-- {{ product_information.categories_id.id }} -->
-                                <label :for="index" v-for="(category, index) in categories" :key=index+1 class="list-group-item d-block">
-                                    {{ category.name }}
-                                    <input type="checkbox" :id="index"  :value="category.id" >
-                                </label>
-                            </ul>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
 </template>
 
 <script lang="ts">
+import ProductDetailsVue from './ProductDetails.vue'
 
     export default {
         props: ['product'],
@@ -119,52 +90,70 @@
                 product_information: this.product,
                 categories: [],
                 brands: [],
-                image: []
+                file: null,
+                photo: '/img/photo.png',
+                showPhoto: true,
             }
         },
         created(){
             this.getCategories()
             this.getBrands()
+
+            if(this.product_information.photo != null){
+                this.showPhoto = false
+            }
         },
         methods:{
-            async loadImage(e){
-                var files = e.target.files || e.dataTransfer.files
-                if(!files.length)
-                    return
-                this.createImage(files[0])
+            async previewFile(event){
+                this.file = event.target.files[0]
+                this.photo = URL.createObjectURL(this.file);
+                this.showPhoto = true
             },
-            async createImage(file){
-                this.image = new Image();
-                var reader = new FileReader();
-                var vm = this;
-
-                reader.onload = (e) => {
-                    vm.image = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            },
-
+            
             async store(){
                 if(this.product.id == null){
-                    await axios.post("/product/insertInformation", this.product_information).then(res => {
-                        console.log(this.product_information)
-                        console.log(res.data)
+                    let data =  new FormData();
+
+                    data.append('photo', this.file, this.file.name)
+                    data.append('name', this.product_information.name)
+                    data.append('category_id', this.product_information.category_id)
+                    data.append('brand_id', this.product_information.brand_id)
+                    data.append('excerpt', this.product_information.excerpt)
+                    data.append('description', this.product_information.description)
+                    data.append('price', this.product_information.price)
+                    data.append('stock', this.product_information.stock)
+
+                    await axios.post("/product/insertInformation", data).then(res => {
                         swal("Good job!", "You insert ok!", "success");
                     })
                 }else{
-                    await axios.post(`/product/updateInformation/${this.product.id}`, this.product_information).then(res => {
+                    let data =  new FormData();
+                    if(this.file == null){
+                        data.append('photo', this.product_information.photo)
+                    }else{
+                        data.append('photo', this.file, this.file.name)
+                    }
+                    data.append('name', this.product_information.name)
+                    data.append('category_id', this.product_information.category_id)
+                    data.append('brand_id', this.product_information.brand_id)
+                    data.append('excerpt', this.product_information.excerpt)
+                    data.append('description', this.product_information.description)
+                    data.append('price', this.product_information.price)
+                    data.append('stock', this.product_information.stock)
+
+                    await axios.post(`/product/updateInformation/${this.product.id}`, data).then(res => {
                         swal("Good job!", "You product update ok!", "success");
                     })
                 }
             },
 
             async getCategories(){
-                await axios.post("/api/categories").then(res => {
+                await axios.post("/api/categoriesController").then(res => {
                     this.categories = res.data 
                 })
             },
             async getBrands(){
-                await axios.post("/api/brands").then(res => {
+                await axios.post("/api/brandsController").then(res => {
                     this.brands = res.data 
                 })
             },

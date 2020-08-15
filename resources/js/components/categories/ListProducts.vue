@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <div class="container ">
+            <!-- <products :products="`${products_information.products}`"/> -->
         <div class="row p-4 d-flex justify-content-end input-group">
             <input type="search" class="form-control col-4" placeholder="Search" v-model="search" v-on:keyup.enter="searching">
             <div class="input-group-append">
@@ -11,16 +12,16 @@
                 <menu-aside/>
             </aside>
             <section class="col-9 pt-4"> 
-                <div  v-for="(product, index) in products_information" :key="index" class="card mb-4 col-12">
+                <div  v-for="(product, index) in products_information.products" :key="index" class="card mb-4 col-12">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img :src="product.photo" class="card-img" alt="...">
+                            <img src="https://media.istockphoto.com/photos/mens-black-blank-tshirt-templatefrom-two-sides-natural-shape-on-for-picture-id1151955707" class="card-img" alt="...">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title">{{product.name}}</h5>
-                                    <p class=" float-right">{{product.brand.name}}</p>
+                                    <!-- <p class=" float-right">{{product.brand.name}}</p> -->
                                 </div>
                                 <p class="card-text">{{product.excerpt}}</p>
                                 <hr>
@@ -48,26 +49,22 @@
 
             </section>
         </div>
-    </div>
+    </div> 
+
 </template>
 <script>
 import MenuAside from './../aside/Menu.vue'
 
     export default {
-        props: ['products'],
+        props: ['categories'],
         components:{
             MenuAside,
         },
         data(){
             return{
                 product_exists: false,
-                products_information:  this.products,
+                products_information:  this.categories,
                 search: ""
-            }
-        },
-        mounted() {
-            if(this.products_information == null){
-                this.product_exists =  true
             }
         },
         methods:{

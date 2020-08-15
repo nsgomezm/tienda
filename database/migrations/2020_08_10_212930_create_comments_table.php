@@ -17,9 +17,12 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->text('body');
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->softDeletes();
+
             $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

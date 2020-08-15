@@ -3,7 +3,7 @@
         <div class="card my-4" >
             <div class="row no-gutters">
                 <div class="col-md-5">
-                    <img src="https://media.istockphoto.com/photos/mens-black-blank-tshirt-templatefrom-two-sides-natural-shape-on-for-picture-id1151955707" class="card-img" alt="...">
+                    <img :src="product_details.photo" class="card-img" id="img-zoom" :data-zoom-image="product_details.photo">
                 </div>
                 <div class="col-md-6">
                     <div class="card-body">
@@ -27,47 +27,49 @@
             </div>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <div class="d-block text-right">fecha</div>
-                <h3>Nombre</h3>
-                <p>Comentario</p>
-            </li>
-            <li class="list-group-item">
-                <div class="d-block text-right">fecha</div>
-                <h3>Nombre</h3>  
-                <p>Dapibus ac facilisis in </p>
-            </li>
-            <li class="list-group-item">
-                <div class="d-block text-right">fecha</div>
-                <h3>Nombre</h3>  
-                <p>Morbi leo risus </p>
-            </li>
-            <li class="list-group-item">
-                <div class="d-block text-right">fecha</div>
-                <h3>Nombre</h3>  
-                <p>Porta ac consectetur ac </p>
-            </li>
-            <li class="list-group-item">
-                <div class="d-block text-right">fecha</div>
-                <h3>Nombre</h3>  
-                <p>Vestibulum at eros </p>
+            <li class="list-group-item" v-for="(comment, index) in product_details.comments" :key="index">
+                <div class="d-block text-right">{{comment.created_at}}</div>
+                <h3>{{comment.user.name}}</h3>
+                <p>{{comment.body}}</p>
             </li>
         </ul>   
+        <input type="text" placeholder="Write comment" class="form-control mt-4" v-model="comment" @keyup.enter="storeComment()">
     </div>
 </template>
 
 <script>
+    window.onload = function(){
+        // $(document).ready(function(){
+        //     alert('hola')
+        // })
+        $('#img-zoom').elevateZoom({
+            zoomType: "lens",
+            lensShape: "rownd",
+            scrollZoom: true,
+            // tintOpacity: 0.8
+        })
+    }
+
     export default {
         props: ['product'],
 
         data(){
             return{
-                product_details: this.product
+                product_details: this.product,
+                comment: ''
             }
         },
         created(){
         },
         methods:{
+            async storeComment(){
+                // alert(this.comentario)
+                await axios.post(`/comment/insert/${this.product_details.id}/${this.comment}`).then(res => {
+                    console.log(res.data)
+                    this.product_details.comments.push(res.data)
+                    // this.comment = {}
+                })
+            }
         }
 
     }
