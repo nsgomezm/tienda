@@ -20,12 +20,11 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 Route::get('/test', function(){
+    // $role = Role::create(['name' => 'user']); # creación de roles
 
-    // $role = Role::create(['name' => 'admin']); - creación de roles
-
-    $user = User::find(1);
-    $user->assignRole('admin');
-    return $user;
+    // $user = User::find(1);
+    // $user->assignRole('admin');
+    // return $user;
 
     
 });
@@ -44,39 +43,38 @@ Route::get('/home/brand/{search?}', 'ProductController@getProductsBrand');
 Route::get('/product/getInformation/{id}', 'ProductController@getInformation')->name('getProduct'); 
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
-    // Route::view('/product/form', 'product-form')->name('productForm');
     
     Route::post('/comment/insert/{id}/{comment}', 'CommentController@insertComment');
     
-    Route::get('/product/form/{id?}', 'ProductController@form');
-    Route::get('/product/details/{id}', function($id){
-        return view('product-details', compact('id'));
-    });
+    Route::group(['prefix' => 'Admin', 'middleware' => 'role:admin'] , function(){
+        Route::view('/', 'dashboard')->name('dashboard');
+        
+        Route::view('/brands', 'brands');
+        Route::get('/Admin/brands/insert/{name}', 'BrandController@insert');
+        Route::get('/Admin/brands/delete/{id}', 'BrandController@delete');
+        Route::get('/Admin/brands/update/{id}/{name}', 'BrandController@update');
+        
+        
+        Route::view('/categories', 'categories');
+        Route::get('/Admin/categories/insert/{name}', 'CategoryController@insert');
+        Route::get('/Admin/categories/delete/{id}', 'CategoryController@delete');
+        Route::get('/Admin/categories/update/{id}/{name}', 'CategoryController@update');
+            
+        Route::get('/product/form/{id?}', 'ProductController@form');
+        Route::get('/Admin/product/details/{id}', function($id){
+            return view('product-details', compact('id'));
+        });
 
-    Route::view('/brands', 'brands');
-    Route::get('/brands/insert/{name}', 'BrandController@insert');
-    Route::get('/brands/delete/{id}', 'BrandController@delete');
-    Route::get('/brands/update/{id}/{name}', 'BrandController@update');
-
-    
-    Route::view('/categories', 'categories');
-    Route::get('/categories/insert/{name}', 'CategoryController@insert');
-    Route::get('/categories/delete/{id}', 'CategoryController@delete');
-    Route::get('/categories/update/{id}/{name}', 'CategoryController@update');
-
-    
-
-    
+        Route::post('/product/updateInformation/{product}', 'ProductController@updateInformation')->name('updateProduct'); 
+        Route::post('/product/deleteInformation/{id}', 'ProductController@deleteInformation')->name('deleteProduct'); 
+        Route::post('/product/insertInformation', 'ProductController@insertInformation')->name('insertProduct'); 
+    });    
     
     // consulta
-    Route::post('/product/updateInformation/{product}', 'ProductController@updateInformation')->name('updateProduct'); 
-    Route::post('/product/deleteInformation/{id}', 'ProductController@deleteInformation')->name('deleteProduct'); 
-    Route::post('/product/insertInformation', 'ProductController@insertInformation')->name('insertProduct'); 
-
-
     Route::get('/logout', 'AuthController@logout')->name('logout');
     Route::post('/product/information/{id}', function($id){
         return Product::find($id);
     });
+    
+
 });

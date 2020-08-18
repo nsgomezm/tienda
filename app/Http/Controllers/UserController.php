@@ -12,12 +12,13 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => 'required|unique:users|confirmed',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:8|confirmed',
         ]);
         $user = new User($request->all());
+        $user->assignRole('user');
         $user->save();
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/home');
     }
 }

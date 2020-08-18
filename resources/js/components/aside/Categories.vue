@@ -54,7 +54,7 @@
                 });
             },
             async edit(id,value){
-                await axios.get(`/categories/update/${id}/${value}`).then(res => {
+                await axios.get(`Admin/categories/update/${id}/${value}`).then(res => {
                     this.getCategories()
                     swal("Good job!", "you category update", "success");
                 })
@@ -69,7 +69,7 @@
                 });
             },
             async store(value){
-                await axios.get(`/categories/insert/${value}`).then(res => {
+                await axios.get(`Admin/categories/insert/${value}`).then(res => {
                     this.getCategories()
                     swal("Good job!", "you category save", "success");
                 })
@@ -90,7 +90,7 @@
             },
             async deleteProduct(id){
                 // console.log(id)
-                await axios.get(`/categories/delete/${id}`).then(res => {
+                await axios.get(`Admin/categories/delete/${id}`).then(res => {
                     this.getCategories()
                     swal("Good job!", "you brand delete", "success");
                 })

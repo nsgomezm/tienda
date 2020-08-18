@@ -72,7 +72,7 @@
                 </div>
                 <hr>
                 <div class="row  d-flex justify-content-around">
-                    <a href="/dashboard" class="btn btn-link">To return</a>
+                    <a href="/Admin" class="btn btn-link">To return</a>
                     <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>
@@ -123,7 +123,7 @@ import ProductDetailsVue from './ProductDetails.vue'
                     data.append('price', this.product_information.price)
                     data.append('stock', this.product_information.stock)
 
-                    await axios.post("/product/insertInformation", data).then(res => {
+                    await axios.post("/Admin/product/insertInformation", data).then(res => {
                         swal("Good job!", "You insert ok!", "success");
                     })
                 }else{
@@ -141,7 +141,7 @@ import ProductDetailsVue from './ProductDetails.vue'
                     data.append('price', this.product_information.price)
                     data.append('stock', this.product_information.stock)
 
-                    await axios.post(`/product/updateInformation/${this.product.id}`, data).then(res => {
+                    await axios.post(`/Admin/product/updateInformation/${this.product.id}`, data).then(res => {
                         swal("Good job!", "You product update ok!", "success");
                     })
                 }

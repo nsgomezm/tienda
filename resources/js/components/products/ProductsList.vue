@@ -1,7 +1,7 @@
 <template>
     <div class="body-bg p-4 mt-4">
         <div class="mb-4">
-            <a href="product/form" class="btn btn-primary">New product</a>
+            <a href="/Admin/product/form" class="btn btn-primary">New product</a>
         </div>
         <table class="table table-bordered table-hover">
             <thead>
@@ -28,7 +28,7 @@
                     <td>{{ product.comments.length }}</td>
                     <!-- actions -->
                     <td><a :href="`product/getInformation/${product.id}`" class="btn btn-secondary"><i class="fas fa-info"></i> </a></td>
-                    <td><a :href="`product/form/${product.id}`" class="btn btn-primary"><i class="fas fa-share"></i> </a></td>
+                    <td><a :href="`Admin/product/form/${product.id}`" class="btn btn-primary"><i class="fas fa-share"></i> </a></td>
                     <td><a href="#" class="btn btn-danger" v-on:click="confirmDelete(product)"><i class="fas fa-trash"></i> </a></td>
                 </tr>
             </tbody>
@@ -78,7 +78,7 @@
             },
             async deleteProduct(product){
                 // console.log(id)
-                await axios.post(`/product/deleteInformation/${product.id}`).then(res => {
+                await axios.post(`Admin/product/deleteInformation/${product.id}`).then(res => {
                     console.log(res.data)
                     this.getProducts()
                     swal(product.name + " is deleted" , {

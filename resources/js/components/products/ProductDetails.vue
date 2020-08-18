@@ -67,6 +67,7 @@
                 await axios.post(`/comment/insert/${this.product_details.id}/${this.comment}`).then(res => {
                     console.log(res.data)
                     this.product_details.comments.push(res.data)
+                    this.comment = ''
                     // this.comment = {}
                 })
             }

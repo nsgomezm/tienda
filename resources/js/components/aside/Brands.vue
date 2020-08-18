@@ -55,7 +55,7 @@
                 });
             },
             async edit(id,value){
-                await axios.get(`/brands/update/${id}/${value}`).then(res => {
+                await axios.get(`Admin/brands/update/${id}/${value}`).then(res => {
                     this.getBrands()
                     swal("Good job!", "you brand update", "success");
                 })
@@ -70,7 +70,7 @@
                 });
             },
             async store(value){
-                await axios.get(`/brands/insert/${value}`).then(res => {
+                await axios.get(`Admin/brands/insert/${value}`).then(res => {
                     this.getBrands()
                     swal("Good job!", "you brand save", "success");
                 })
@@ -91,7 +91,7 @@
             },
             async deleteProduct(id){
                 // console.log(id)
-                await axios.get(`/brands/delete/${id}`).then(res => {
+                await axios.get(`Admin/brands/delete/${id}`).then(res => {
                     this.getBrands()
                     swal("Good job!", "you brand delete", "success");
                 })

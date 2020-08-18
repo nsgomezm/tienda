@@ -2021,7 +2021,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get("/brands/update/".concat(id, "/").concat(value)).then(function (res) {
+                return axios.get("Admin/brands/update/".concat(id, "/").concat(value)).then(function (res) {
                   _this3.getBrands();
 
                   swal("Good job!", "you brand update", "success");
@@ -2067,7 +2067,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return axios.get("/brands/insert/".concat(value)).then(function (res) {
+                return axios.get("Admin/brands/insert/".concat(value)).then(function (res) {
                   _this5.getBrands();
 
                   swal("Good job!", "you brand save", "success");
@@ -2118,7 +2118,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return axios.get("/brands/delete/".concat(id)).then(function (res) {
+                return axios.get("Admin/brands/delete/".concat(id)).then(function (res) {
                   _this7.getBrands();
 
                   swal("Good job!", "you brand delete", "success");
@@ -2247,7 +2247,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get("/categories/update/".concat(id, "/").concat(value)).then(function (res) {
+                return axios.get("Admin/categories/update/".concat(id, "/").concat(value)).then(function (res) {
                   _this3.getCategories();
 
                   swal("Good job!", "you category update", "success");
@@ -2293,7 +2293,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.next = 2;
-                return axios.get("/categories/insert/".concat(value)).then(function (res) {
+                return axios.get("Admin/categories/insert/".concat(value)).then(function (res) {
                   _this5.getCategories();
 
                   swal("Good job!", "you category save", "success");
@@ -2344,7 +2344,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return axios.get("/categories/delete/".concat(id)).then(function (res) {
+                return axios.get("Admin/categories/delete/".concat(id)).then(function (res) {
                   _this7.getCategories();
 
                   swal("Good job!", "you brand delete", "success");
@@ -2709,8 +2709,9 @@ window.onload = function () {
                 return axios.post("/comment/insert/".concat(_this.product_details.id, "/").concat(_this.comment)).then(function (res) {
                   console.log(res.data);
 
-                  _this.product_details.comments.push(res.data); // this.comment = {}
+                  _this.product_details.comments.push(res.data);
 
+                  _this.comment = ''; // this.comment = {}
                 });
 
               case 2:
@@ -2967,7 +2968,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.post("/product/deleteInformation/".concat(product.id)).then(function (res) {
+                return axios.post("Admin/product/deleteInformation/".concat(product.id)).then(function (res) {
                   console.log(res.data);
 
                   _this3.getProducts();
@@ -39463,7 +39464,7 @@ __webpack_require__.r(__webpack_exports__);
                     data.append('price', this.product_information.price)
                     data.append('stock', this.product_information.stock)
 
-                    await axios.post("/product/insertInformation", data).then(res => {
+                    await axios.post("/Admin/product/insertInformation", data).then(res => {
                         swal("Good job!", "You insert ok!", "success");
                     })
                 }else{
@@ -39481,7 +39482,7 @@ __webpack_require__.r(__webpack_exports__);
                     data.append('price', this.product_information.price)
                     data.append('stock', this.product_information.stock)
 
-                    await axios.post(`/product/updateInformation/${this.product.id}`, data).then(res => {
+                    await axios.post(`/Admin/product/updateInformation/${this.product.id}`, data).then(res => {
                         swal("Good job!", "You product update ok!", "success");
                     })
                 }
@@ -40689,7 +40690,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row  d-flex justify-content-around" }, [
-      _c("a", { staticClass: "btn btn-link", attrs: { href: "/dashboard" } }, [
+      _c("a", { staticClass: "btn btn-link", attrs: { href: "/Admin" } }, [
         _vm._v("To return")
       ]),
       _vm._v(" "),
@@ -40973,7 +40974,7 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { href: "product/form/" + product.id }
+                  attrs: { href: "Admin/product/form/" + product.id }
                 },
                 [_c("i", { staticClass: "fas fa-share" })]
               )
@@ -41009,7 +41010,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "mb-4" }, [
       _c(
         "a",
-        { staticClass: "btn btn-primary", attrs: { href: "product/form" } },
+        {
+          staticClass: "btn btn-primary",
+          attrs: { href: "/Admin/product/form" }
+        },
         [_vm._v("New product")]
       )
     ])

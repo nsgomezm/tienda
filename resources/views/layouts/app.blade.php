@@ -52,7 +52,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                    @role('admin')
+                                        <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
+                                    @endrole
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </div>
                             </li>
