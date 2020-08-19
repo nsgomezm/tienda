@@ -2632,6 +2632,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2712,6 +2714,17 @@ window.onload = function () {
                   _this.product_details.comments.push(res.data);
 
                   _this.comment = ''; // this.comment = {}
+                })["catch"](function (res) {
+                  swal(_defineProperty({
+                    title: "OOps!!",
+                    text: "Debes estar registrado",
+                    icon: "warning",
+                    buttons: true
+                  }, "buttons", ["Close", "Login"])).then(function (willDelete) {
+                    if (willDelete) {
+                      window.location.href = "/login";
+                    }
+                  });
                 });
 
               case 2:

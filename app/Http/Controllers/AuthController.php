@@ -11,13 +11,13 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if(Auth::attempt($credentials)){
+            if(Auth::user()->hasRole('admin')){
+                return redirect()->intended('/Admin');
+            }
             return redirect()->intended('home');
         }
         return redirect()->intended('login');
-        
-
     }
-
     public function logout(){
         Auth::logout();
         return redirect('/home');

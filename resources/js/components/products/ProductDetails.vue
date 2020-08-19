@@ -69,6 +69,20 @@
                     this.product_details.comments.push(res.data)
                     this.comment = ''
                     // this.comment = {}
+                    
+                }).catch(res => {
+                    swal({
+                        title: "OOps!!",
+                        text: "Debes estar registrado",
+                        icon: "warning",
+                        buttons: true,
+                        buttons: ["Close", "Login"],
+                        })
+                        .then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href="/login"
+                        }
+                    });
                 })
             }
         }
