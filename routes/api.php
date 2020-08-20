@@ -4,7 +4,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use Yajra\DataTables\DataTables;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,8 +24,14 @@ Route::post('/products/information/', function(){
     return Product::with('brand','categories')->get();
 });
 
-Route::post('/products/details', function(){
-    return Product::with('comments','brand','categories')->get();
+Route::get('/products/details', function(){
+    // Datatables::of(User::all())->make(true)
+    return DataTables::of( Product::with('comments','brand','categories') )->addColumn('action', function(){
+        return '<a href="#" class="btn btn-secondary"><i class="fas fa-info"></i> </a>
+        <a href="#" class="btn btn-primary"><i class="fas fa-share"></i> </a>
+        <a href="#" class="btn btn-danger" v-on:click="confirmDelete(product)"><i class="fas fa-trash"></i> </a>';
+    })->make(true);
+    // return Product::with('comments','brand','categories')->get();
 });
 
 Route::post('/categories', function(){

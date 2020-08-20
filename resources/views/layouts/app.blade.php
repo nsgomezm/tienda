@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/d10f5f87f4.js" crossorigin="anonymous"></script>
 </head>
 <body>
